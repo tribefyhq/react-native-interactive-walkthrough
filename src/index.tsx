@@ -168,28 +168,28 @@ const WalkthroughDisplayer = () => {
       () =>
         isWalkthroughOn
           ? BackHandler.addEventListener("hardwareBackPress", () => {
-              if (isKeyboardOpen) {
-                return false;
-              } else {
-                const backEnabled = currentSteps.filter(
-                  (s) => s.enableHardwareBack,
-                );
-                if (backEnabled.length) {
-                  const functions = backEnabled
-                    .map((s) => s.enableHardwareBack)
-                    .filter(
-                      (x) => typeof x === "function",
-                    ) as EnableHardwareBackFunction[];
-                  if (!functions.length) {
-                    // if no function was specified, just do the default previous
-                    functions.push(() => previous());
-                  }
-                  functions.forEach((f) => f({ goTo, previous }));
+            if (isKeyboardOpen) {
+              return false;
+            } else {
+              const backEnabled = currentSteps.filter(
+                (s) => s.enableHardwareBack,
+              );
+              if (backEnabled.length) {
+                const functions = backEnabled
+                .map((s) => s.enableHardwareBack)
+                .filter(
+                  (x) => typeof x === "function",
+                ) as EnableHardwareBackFunction[];
+                if (!functions.length) {
+                  // if no function was specified, just do the default previous
+                  functions.push(() => previous());
                 }
-
-                return true; // return true to block the back button which we always do when the walkthrough is on.
+                functions.forEach((f) => f({ goTo, previous }));
               }
-            }).remove
+
+              return true; // return true to block the back button which we always do when the walkthrough is on.
+            }
+          }).remove
           : () => undefined,
       [isWalkthroughOn, isKeyboardOpen, currentSteps, previous, goTo],
     );
@@ -220,10 +220,6 @@ const WalkthroughDisplayer = () => {
           step.onStart?.({ time });
           step.measureMask();
         });
-
-        // After we've animated to the next masks, we measure the position of the masks again, in case we need to readjust the position.
-        // onLayout doesn't always catch the elements in the right spot.
-        // setTimeout(() => { currentSteps.forEach(step => step.measureMask()); }, 2000)
       }
 
       lastStepsRef.current = currentSteps;
@@ -232,19 +228,20 @@ const WalkthroughDisplayer = () => {
     [currentSteps.map((s) => s.identifier).join("|")],
   );
 
-  const overlayProps = useMemo(() => {
-    // We build the views from top to bottom
-    const sortedCurrentSteps: IWalkthroughStep[] = sortBy(
-      currentSteps,
-      (step) => step.mask.y,
-    );
-    const arr: IOverlayProps[] = [];
-    let markerY = 0;
+  const overlayProps = useMemo(
+    () => {
+      // We build the views from top to bottom
+      const sortedCurrentSteps: IWalkthroughStep[] = sortBy(
+        currentSteps,
+        (step) => step.mask.y,
+      );
+      const arr: IOverlayProps[] = [];
+      let markerY = 0;
 
-    sortedCurrentSteps.forEach((step, i) => {
-      const la = step.layoutAdjustments;
-      const mask: IWalkthroughStepMask = la
-        ? {
+      sortedCurrentSteps.forEach((step, i) => {
+        const la = step.layoutAdjustments;
+        const mask: IWalkthroughStepMask = la
+          ? {
             ...step.mask,
             x: (la.x ?? step.mask.x) + (la.addX ?? -(la.addPadding || 0)),
             y: (la.y ?? step.mask.y) + (la.addY ?? -(la.addPadding || 0)),
@@ -255,100 +252,102 @@ const WalkthroughDisplayer = () => {
               (la.height ?? step.mask.height) +
               (la.addHeight ?? (la.addPadding || 0) * 2),
           }
-        : step.mask;
+          : step.mask;
 
-      // Rectange on the top across the whole screen
-      arr.push({
-        key: `topRect-${i}`,
-        onPress: step.onPressBackdrop,
-        style: {
-          backgroundColor: backdropColor,
-          top: markerY,
-          left: 0,
-          right: 0,
-          height: mask.y - markerY,
-          ...(debug ? { borderWidth: 1, borderColor: "red" } : {}),
-        },
-      });
-      // Rectange on the left side.
-      arr.push({
-        key: `leftRect-${i}`,
-        onPress: step.onPressBackdrop,
-        style: {
-          backgroundColor: backdropColor,
-          top: mask.y,
-          left: 0,
-          width: mask.x,
-          height: mask.height,
-          ...(debug ? { borderWidth: 1, borderColor: "blue" } : {}),
-        },
-      });
-      // Rectange on the right side.
-      arr.push({
-        key: `rightRect-${i}`,
-        onPress: step.onPressBackdrop,
-        style: {
-          backgroundColor: backdropColor,
-          top: mask.y,
-          left: mask.x + mask.width,
-          right: 0,
-          height: mask.height,
-          ...(debug ? { borderWidth: 1, borderColor: "green" } : {}),
-        },
-      });
-      // The bottom rectange up to the next component (or bottom of the screen)
-      const nextStep =
-        i + 1 < sortedCurrentSteps.length
-          ? sortedCurrentSteps[i + 1]
-          : undefined;
-      if (!nextStep) {
-        const top = mask.y + mask.height;
+        // Rectange on the top across the whole screen
         arr.push({
-          // We only have one of these (at the end) so want to give this the same key so it can be reused in the animation.
-          key: `bottomRect`,
+          key: `topRect-${i}`,
           onPress: step.onPressBackdrop,
           style: {
             backgroundColor: backdropColor,
-            top,
+            top: markerY,
             left: 0,
             right: 0,
-            bottom: 0,
-            ...(debug ? { borderWidth: 1, borderColor: "orange" } : {}),
+            height: mask.y - markerY,
+            ...(debug ? { borderWidth: 1, borderColor: "red" } : {}),
           },
         });
-      }
-
-      // If we aren't allowing interaction on the highlighted region, then just put a view over that as well so its not pressable.
-      if (!mask.allowInteraction) {
+        // Rectange on the left side.
         arr.push({
-          key: `coverRect-${i}`,
-          onPress: step.onPressMask,
+          key: `leftRect-${i}`,
+          onPress: step.onPressBackdrop,
           style: {
+            backgroundColor: backdropColor,
             top: mask.y,
-            left: mask.x,
-            width: mask.width,
+            left: 0,
+            width: mask.x,
             height: mask.height,
-            // on Android (not sure if all), if we have an empty View without a background, it will not take the
-            // touchevents. Rather then experimenting with wrapping it with TouchableWithoutFeedback, etc, we simply
-            // give it an *extremely* subtle background that's essentially not noticeable. This helps it steal the touch events.
-            ...(isAndroid
-              ? { backgroundColor: "#FFFFFF01", opacity: 0.1 }
-              : {}),
-            // Add a background color so in testing you can see that there is something over it.
-            ...(debug
-              ? {
+            ...(debug ? { borderWidth: 1, borderColor: "blue" } : {}),
+          },
+        });
+        // Rectange on the right side.
+        arr.push({
+          key: `rightRect-${i}`,
+          onPress: step.onPressBackdrop,
+          style: {
+            backgroundColor: backdropColor,
+            top: mask.y,
+            left: mask.x + mask.width,
+            right: 0,
+            height: mask.height,
+            ...(debug ? { borderWidth: 1, borderColor: "green" } : {}),
+          },
+        });
+        // The bottom rectange up to the next component (or bottom of the screen)
+        const nextStep =
+          i + 1 < sortedCurrentSteps.length
+            ? sortedCurrentSteps[i + 1]
+            : undefined;
+        if (!nextStep) {
+          const top = mask.y + mask.height;
+          arr.push({
+            // We only have one of these (at the end) so want to give this the same key so it can be reused in the animation.
+            key: `bottomRect`,
+            onPress: step.onPressBackdrop,
+            style: {
+              backgroundColor: backdropColor,
+              top,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              ...(debug ? { borderWidth: 1, borderColor: "orange" } : {}),
+            },
+          });
+        }
+
+        // If we aren't allowing interaction on the highlighted region, then just put a view over that as well so its not pressable.
+        if (!mask.allowInteraction) {
+          arr.push({
+            key: `coverRect-${i}`,
+            onPress: step.onPressMask,
+            style: {
+              top: mask.y,
+              left: mask.x,
+              width: mask.width,
+              height: mask.height,
+              // on Android (not sure if all), if we have an empty View without a background, it will not take the
+              // touchevents. Rather then experimenting with wrapping it with TouchableWithoutFeedback, etc, we simply
+              // give it an *extremely* subtle background that's essentially not noticeable. This helps it steal the touch events.
+              ...(isAndroid
+                ? { backgroundColor: "#FFFFFF01", opacity: 0.1 }
+                : {}),
+              // Add a background color so in testing you can see that there is something over it.
+              ...(debug
+                ? {
                   borderWidth: 1,
                   borderColor: "forestgreen",
                   backgroundColor: "#0000FF33",
                 }
-              : {}),
-          },
-        });
-      }
-      markerY = mask.y + mask.height;
-    });
-    return arr;
-  }, [currentSteps, backdropColor, debug]);
+                : {}),
+            },
+          });
+        }
+        markerY = mask.y + mask.height;
+      });
+      return arr;
+    },
+    [currentSteps, backdropColor, debug],
+  );
 
   return (
     <>
@@ -406,15 +405,15 @@ interface IWalkthroughProvider
       | "backdropColor"
       | "animateNextLayoutChange"
       | "debug"
-    >
-  > {
+      >
+    > {
   enableExperimentalLayoutAnimation?: boolean;
   children?: any;
 }
 const WalkthroughProvider = forwardRef<
   IWalkthroughFunctions,
   IWalkthroughProvider
->(
+  >(
   (
     {
       useIsFocused = () => true,
@@ -539,7 +538,7 @@ const WalkthroughProvider = forwardRef<
 const useWalkthrough = () => {
   const context = useContext<IWalkthroughContext>(WalkthroughContext);
   if (!context) {
-    throw "Make sure that this is called as a child of a Walkthrough component.";
+    throw "Make sure that this is called as a child of WalkthroughProvider.";
   }
   return context;
 };
@@ -551,7 +550,7 @@ interface IUseWalkthroughStep
   extends PartialBy<
     IUseWalkthroughStepStrict,
     "identifier" | "overlayComponentKey" | "measureMask"
-  > {}
+    > {}
 
 const useWalkthroughStep = ({
   fullScreen,
@@ -666,12 +665,15 @@ const useWalkthroughStep = ({
 
   const { width, height } = useSafeAreaFrame();
 
-  useEffect(() => {
-    if (fullScreen && width && height) {
-      // We basically put a line at the bottom of the screen so that we blank out the whole screen.
-      registerStepWithProps({ x: 0, y: height, width, height });
-    }
-  }, [fullScreen, registerStepWithProps, width, height]);
+  useEffect(
+    () => {
+      if (fullScreen && width && height) {
+        // We basically put a line at the bottom of the screen so that we blank out the whole screen.
+        registerStepWithProps({ x: 0, y: height, width, height });
+      }
+    },
+    [fullScreen, registerStepWithProps, width, height],
+  );
 
   const layoutLockRef = useRef(false);
   const onLayout = useCallback(
