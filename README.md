@@ -2,8 +2,11 @@
 
 [![Version](https://img.shields.io/github/package-json/v/tribefyhq/react-native-walkthrough)][package]
 [![MIT Licence](https://img.shields.io/github/license/tribefyhq/react-native-walkthrough)][license]
+![Downloads](https://img.shields.io/github/downloads/tribefyhq/react-native-walkthrough/total)
 
 A cross-platform Walkthrough component for React Native. 
+
+> _**NOTE**: This library is currently under development, and should primarly be considered as being in a beta stage._
 
 ## Features
 
@@ -21,7 +24,6 @@ A cross-platform Walkthrough component for React Native.
 
 
 ## Demo
-
 
 https://user-images.githubusercontent.com/525212/147403105-b61c7b9f-0f87-442c-ba2c-361c6c71aab5.mp4
 

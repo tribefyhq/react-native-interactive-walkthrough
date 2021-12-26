@@ -1,43 +1,30 @@
 {
   "compilerOptions": {
-    "baseUrl": "./",
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "skipLibCheck": true,
-    "target": "es2015",
-    "module": "es2015",
-    "moduleResolution": "node",
-    "resolveJsonModule": true,
+    "baseUrl": ".",
+    "paths": {
+      "@tribefy/react-native-walkthrough": ["./src/index"]
+    },
+    "allowUnreachableCode": false,
+    "allowUnusedLabels": false,
+    "declaration": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "importsNotUsedAsValues": "error",
     "jsx": "react",
-    "outDir": "lib",
-    "rootDir": "src",
-    "allowSyntheticDefaultImports": true,
+    "lib": ["esnext", "dom"],
+    "module": "esnext",
+    "moduleResolution": "node",
+    "noFallthroughCasesInSwitch": true,
     "noImplicitAny": false,
-    "preserveConstEnums": true,
-    "allowJs": false,
-    "sourceMap": true,
     "noImplicitReturns": true,
-    "noUnusedParameters": false,
-    "noUnusedLocals": false,
-    "lib": [
-      "es7",
-      "es2015",
-      "es2017.string",
-      "es2017.object",
-      "es2018.promise",
-      "es2019.array"
-    ],
-    "types": [
-      "react",
-      "react-native"
-    ]
+    "noImplicitUseStrict": false,
+    "noStrictGenericChecks": false,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "strict": false,
+    "target": "esnext"
   },
-  "types": [
-    "react",
-    "react-native"
-  ],
-  "exclude": [
-    "build",
-    "node_modules"
-  ]
+  "exclude": ["lib/**/*"]
 }

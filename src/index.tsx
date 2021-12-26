@@ -18,10 +18,9 @@ import {
   ViewStyle,
   Keyboard,
   TouchableWithoutFeedback,
-  StatusBar,
 } from "react-native";
 import { useSafeAreaFrame } from "react-native-safe-area-context";
-import sortBy from "lodash.sortBy";
+import sortBy from "lodash/sortBy";
 
 const isAndroid = Platform.OS === "android";
 
