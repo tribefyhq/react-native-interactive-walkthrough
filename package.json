@@ -1,6 +1,6 @@
 {
   "name": "@tribefy/react-native-walkthrough",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Create walkthroughs and onboarding tutorials in react-native.",
   "main": "lib/commonjs/index.js",
   "react-native": "src/index.tsx",
