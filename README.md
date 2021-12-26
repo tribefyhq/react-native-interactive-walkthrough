@@ -1,24 +1,34 @@
-# React Native Walkthrough
+# React Native Interactive Walkthrough
 
-[![Version](https://img.shields.io/github/package-json/v/tribefyhq/react-native-walkthrough)][package]
-[![MIT Licence](https://img.shields.io/github/license/tribefyhq/react-native-walkthrough)][license]
+[![Version](https://img.shields.io/github/package-json/v/tribefyhq/react-native-interactive-walkthrough)][package]
+[![MIT Licence](https://img.shields.io/github/license/tribefyhq/react-native-interactive-walkthrough)][license]
 [![TypeScript](https://img.shields.io/badge/%3C%2F%3E-TypeScript-%230074c1.svg)](http://www.typescriptlang.org/)
-<!-- ![Downloads](https://img.shields.io/github/downloads/tribefyhq/react-native-walkthrough/total) -->
+<!-- ![Downloads](https://img.shields.io/github/downloads/tribefyhq/react-native-interactive-walkthrough/total) -->
 
 A cross-platform interactive walkthrough library for React Native that is performant, simple, extensible, and works with Expo.
 
-Other libraries for react-native had fancy SVG masks, but what if I wanted only the highlighted area to be pressable?
+There are many libraries out there, but I kept running into architectural road blocks. I needed a library that would:
 
-What if I wanted to customize the overlay and give it the abiliity to go backward, forward, or to any other step in the process?
+  1) Allow me to measure where items are and put tooltips relative to those locations
+  2) Easily allow me to jump between steps
+  3) Expose multiple parts of the screen for the tutorial
+  4) Allow different parts of the tutorial to be clickable (or not)
+  5) Work cross-platform without the need to link libraries and fast. 
 
 Out of this need, a new library was born. 
 
 Please keep in mind that this library is currently under development, and should primarly be considered as being in a beta stage.
 
+## Demo
+
+Here is a demo being used in production:
+
+https://user-images.githubusercontent.com/525212/147407154-d7374b9a-c370-4e75-a269-ecd225b4bbbc.mp4
+
 ## Features
 
  1)  [Fast] Smoother animations using LayoutAnimation which is ran natively on both Android and iOS
- 2)  [Flexible] The ability to press in the highlighted area (or not). You can decide if it's pressable through or not.
+ 2)  [Flexible] The ability to press in the highlighted area (or not).
  3)  [Functional] Ability to have multiple parts of the screen showing for a single step, with one interactable and the other not.
  4)  Overlay is fully customizable and you are given the position of the overlay area so you can position relative to the masks.
  5)  No wrapping HOC, passing props into children, etc. Just basic callbacks and context from react native.
@@ -29,10 +39,6 @@ Please keep in mind that this library is currently under development, and should
  10) When mask is not pressable through, you can specify an onPress event. You can also specify onPress background as well.
  11) Pass in a useIsFocused function so that the walkthrough automatically hides itself incase the user redirects away via push notifications or other code.
 
-
-## Demo
-
-https://user-images.githubusercontent.com/525212/147407154-d7374b9a-c370-4e75-a269-ecd225b4bbbc.mp4
 
 ## React Native Compatibility
 
