@@ -2,9 +2,10 @@
 
 [![Version](https://img.shields.io/github/package-json/v/tribefyhq/react-native-walkthrough)][package]
 [![MIT Licence](https://img.shields.io/github/license/tribefyhq/react-native-walkthrough)][license]
-![Downloads](https://img.shields.io/github/downloads/tribefyhq/react-native-walkthrough/total)
+[![TypeScript](https://img.shields.io/badge/%3C%2F%3E-TypeScript-%230074c1.svg)](http://www.typescriptlang.org/)
+<!-- ![Downloads](https://img.shields.io/github/downloads/tribefyhq/react-native-walkthrough/total) -->
 
-A cross-platform Walkthrough component for React Native. 
+A cross-platform Walkthrough component for React Native that is performant, simple, and extensible.
 
 > _**NOTE**: This library is currently under development, and should primarly be considered as being in a beta stage._
 
@@ -26,7 +27,6 @@ A cross-platform Walkthrough component for React Native.
 ## Demo
 
 https://user-images.githubusercontent.com/525212/147403105-b61c7b9f-0f87-442c-ba2c-361c6c71aab5.mp4
-
 
 ## React Native Compatibility
 
@@ -135,7 +135,7 @@ we'll add more in-depth documentation.
 
 This app is currently being used on tribefy.com. 
 
-We're looking for maintainers, so if you are interested please contact aryk@tribefy.com.
+We're looking for maintainers, so if you are interested please contact open-source@tribefy.com.
 
 <!-- badges -->
 
