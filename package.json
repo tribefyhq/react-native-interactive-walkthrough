@@ -1,7 +1,7 @@
 {
-  "name": "@tribefy/react-native-walkthrough",
+  "name": "react-native-interactive-walkthrough",
   "version": "1.0.5",
-  "description": "Create walkthroughs and onboarding tutorials in react-native.",
+  "description": "Create interactive walkthroughs and onboarding tutorials in react-native.",
   "main": "lib/commonjs/index.js",
   "react-native": "src/index.tsx",
   "module": "lib/module/index.js",
@@ -26,15 +26,17 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/tribefyhq/react-native-walkthrough.git"
+    "url": "git+https://github.com/tribefyhq/react-native-interactive-walkthrough.git"
   },
-  "homepage": "https://github.com/tribefyhq/react-native-walkthrough#readme",
+  "homepage": "https://github.com/tribefyhq/react-native-interactive-walkthrough#readme",
   "bugs": {
-    "url": "https://github.com/tribefyhq/react-native-walkthrough/issues"
+    "url": "https://github.com/tribefyhq/react-native-interactive-walkthrough/issues"
   },
   "keywords": [
     "walkthrough",
     "copilot",
+    "intro",
+    "tour",
     "tribefy",
     "react",
     "rn",

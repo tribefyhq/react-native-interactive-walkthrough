@@ -5,9 +5,15 @@
 [![TypeScript](https://img.shields.io/badge/%3C%2F%3E-TypeScript-%230074c1.svg)](http://www.typescriptlang.org/)
 <!-- ![Downloads](https://img.shields.io/github/downloads/tribefyhq/react-native-walkthrough/total) -->
 
-A cross-platform Walkthrough component for React Native that is performant, simple, and extensible.
+A cross-platform interactive walkthrough library for React Native that is performant, simple, extensible, and works with Expo.
 
-> _**NOTE**: This library is currently under development, and should primarly be considered as being in a beta stage._
+Other libraries for react-native had fancy SVG masks, but what if I wanted only the highlighted area to be pressable?
+
+What if I wanted to customize the overlay and give it the abiliity to go backward, forward, or to any other step in the process?
+
+Out of this need, a new library was born. 
+
+Please keep in mind that this library is currently under development, and should primarly be considered as being in a beta stage.
 
 ## Features
 
@@ -89,7 +95,7 @@ export default function HomeScreen() {
     fullScreen: true,
   });
 
-  usePostWalkthroughStep({
+  const {onLayout} = usePostWalkthroughStep({
     number: 2,
     enableHardwareBack: true,
     OverlayComponent: NearbyUsersOverlay,
@@ -104,9 +110,11 @@ export default function HomeScreen() {
 
   return (
       <View style={{ flex: 1 }}>
-        <Text>
-          Here is my app!
-        </Text>
+        <View style={{height: 10}} onLayout={onLayout}>
+            <Text>
+              Here is my app!
+            </Text>
+        </View>
       </View>
   );
 }
@@ -131,12 +139,26 @@ const WelcomeMessageOverlay = ({next}: IOverlayComponentProps) => {
 };
 ```
 
-The code itself is self-documenting if you look at the Typescript interfaces. When we have more time,
+Or you can position it be relative to any element on your screen:
+
+```ts
+const NearbyUsersOverlay = ({next, previous, step: {mask}}: IOverlayComponentProps) =>
+  <WalkthroughCallout
+    style={{position: "absolute", top: mask.y + mask.height + overlayPadding, left: 50}}
+    corner="topLeft"
+    title={`Nearby ${constants.userName.titlePlural}`}
+    text={`These are all your friends and interesting ${constants.userName.plural} nearby!`}
+    next={next}
+    previous={previous}
+  />;
+```
+
+The code is relatively short and readable. If you use TS, the interfaces are very straightforward. When we have more time,
 we'll add more in-depth documentation.
 
 ## Contributing
 
-This app is currently being used in the Tribefy app.
+This app is currently being used in the Tribefy app (tribefy.com).
 
 We're looking for maintainers, so if you are interested please contact open-source@tribefy.com.
 
