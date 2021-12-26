@@ -23,7 +23,9 @@ A cross-platform Walkthrough component for React Native.
 
 ## Demo
 
-<a href="https://raw.githubusercontent.com/satya164/react-native-walkthrough/main/demo/demo.mp4"><img src="https://raw.githubusercontent.com/satya164/react-native-walkthrough/main/demo/demo.gif" width="360"></a>
+
+https://user-images.githubusercontent.com/525212/147403105-b61c7b9f-0f87-442c-ba2c-361c6c71aab5.mp4
+
 
 ## React Native Compatibility
 
@@ -99,8 +101,7 @@ export default function HomeScreen() {
   return (
       <View style={{ flex: 1 }}>
         <Text>
-          Look, I'm safe! Not under a status bar or notch or home indicator or
-          anything! Very cool
+          Here is my app!
         </Text>
       </View>
   );
