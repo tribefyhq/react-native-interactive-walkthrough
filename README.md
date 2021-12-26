@@ -46,7 +46,7 @@ This library will likely work with most versions of React Native, but keep in mi
 
 *It will also work with Expo apps as well since there is no library linking required.*
 
-| `react-native-walkthrough` Version | Required React Native Version |
+| `react-native-interactive-walkthrough` Version | Required React Native Version |
 | ------------------------------- | ----------------------------- |
 | `1.x.x`                         | `>= 0.63`                     |
 
@@ -55,7 +55,7 @@ This library will likely work with most versions of React Native, but keep in mi
 Open a Terminal in the project root and run:
 
 ```sh
-yarn add react-native-walkthrough
+yarn add react-native-interactive-walkthrough
 ```
 
 Make sure you've also have installed`react-native-safe-area-view` with version >= 3.0.0
@@ -63,9 +63,13 @@ Make sure you've also have installed`react-native-safe-area-view` with version >
 yarn add react-native-safe-area-view
 ```
 
-Use the `enableExperimentalLayoutAnimation` somewhere on bootup to make sure we can use LayoutAnimations.
+Use the `enableExperimentalLayoutAnimation` helper somewhere on bootup to make sure we can use LayoutAnimations.
 
-We're done!
+```ts
+import {enableExperimentalLayoutAnimation} from "react-native-interactive-walkthrough"
+
+enableExperimentalLayoutAnimation();
+```
 
 ## Usage
 
@@ -73,7 +77,7 @@ First you need to wrap the root of your app with the `WalkthroughProvider`.
 
 ```js
 import * as React from 'react';
-import { WalkthroughProvider } from 'react-native-walkthrough';
+import { WalkthroughProvider } from 'react-native-interactive-walkthrough';
 import MyAwesomeApp from './src/MyAwesomeApp';
 
 export default function App() {
@@ -91,17 +95,17 @@ export default function App() {
 Now you can use `useWalkthroughStep` to create your steps within the components.
 
 ```ts
-import SafeAreaView from 'react-native-safe-area-view';
+import {useWalkthroughStep} from "react-native-interactive-walkthrough"
 
 export default function HomeScreen() {
 
-  const {isWalkthroughOn, isReady, start} = usePostWalkthroughStep({
+  const {isWalkthroughOn, isReady, start} = useWalkthroughStep({
     number: 1,
     OverlayComponent: WelcomeMessageOverlay,
     fullScreen: true,
   });
 
-  const {onLayout} = usePostWalkthroughStep({
+  const {onLayout} = useWalkthroughStep({
     number: 2,
     enableHardwareBack: true,
     OverlayComponent: NearbyUsersOverlay,
@@ -170,9 +174,9 @@ We're looking for maintainers, so if you are interested please contact open-sour
 
 <!-- badges -->
 
-[build-badge]: https://img.shields.io/circleci/project/github/satya164/react-native-walkthrough/main.svg?style=flat-square
-[build]: https://circleci.com/gh/satya164/react-native-walkthrough
-[version-badge]: https://img.shields.io/npm/v/react-native-walkthrough.svg?style=flat-square
-[package]: https://www.npmjs.com/package/react-native-walkthrough
-[license-badge]: https://img.shields.io/npm/l/react-native-walkthrough.svg?style=flat-square
+[build-badge]: https://img.shields.io/circleci/project/github/satya164/react-native-interactive-walkthrough/main.svg?style=flat-square
+[build]: https://circleci.com/gh/satya164/react-native-interactive-walkthrough
+[version-badge]: https://img.shields.io/npm/v/react-native-interactive-walkthrough.svg?style=flat-square
+[package]: https://www.npmjs.com/package/react-native-interactive-walkthrough
+[license-badge]: https://img.shields.io/npm/l/react-native-interactive-walkthrough.svg?style=flat-square
 [license]: https://opensource.org/licenses/MIT
