@@ -1,6 +1,6 @@
 {
   "name": "react-native-interactive-walkthrough",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "Create interactive walkthroughs and onboarding tutorials in react-native.",
   "main": "lib/commonjs/index.js",
   "react-native": "src/index.tsx",
