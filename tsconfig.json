@@ -9,8 +9,8 @@
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "jsx": "react",
-    "outDir": "artifacts",
-    "rootDir": "lib",
+    "outDir": "lib",
+    "rootDir": "src",
     "allowSyntheticDefaultImports": true,
     "noImplicitAny": false,
     "preserveConstEnums": true,
@@ -29,19 +29,14 @@
     ],
     "types": [
       "react",
-      "react-native",
-      "jest"
+      "react-native"
     ]
   },
   "types": [
     "react",
-    "react-native",
-    "jest"
+    "react-native"
   ],
   "exclude": [
-    "android",
-    "App.tsx",
-    "ios",
     "build",
     "node_modules"
   ]

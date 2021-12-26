@@ -23,9 +23,6 @@ import {
 import { useSafeAreaFrame } from "react-native-safe-area-context";
 import sortBy from "lodash.sortBy";
 
-// @aryk - Walkthrough library which allows for:
-//
-
 const isAndroid = Platform.OS === "android";
 
 // Convenience method to enable this if it's not already enabled in your app.
