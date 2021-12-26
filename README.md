@@ -25,7 +25,7 @@ A cross-platform Walkthrough component for React Native.
 
 ## Demo
 
-https://user-images.githubusercontent.com/525212/147403105-b61c7b9f-0f87-442c-ba2c-361c6c71aab5.mp4
+https://user-images.githubusercontent.com/525212/147407154-d7374b9a-c370-4e75-a269-ecd225b4bbbc.mp4
 
 
 ## React Native Compatibility
