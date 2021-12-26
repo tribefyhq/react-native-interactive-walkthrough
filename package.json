@@ -1,0 +1,58 @@
+{
+  "name": "react-native-walkthrough",
+  "version": "1.0.0",
+  "description": "Create walkthroughs and onboarding tutorials in react-native.",
+  "main": "./build/dist/index.js",
+  "repository": "git@github.com:tribefy/react-native-walkthrough.git",
+  "author": "Aryk <aryk.grosz@gmail.com>",
+  "license": "MIT",
+  "homepage": "https://github.com/tribefy/react-native-walkthrough#readme",
+  "bugs": "https://github.com/tribefy/react-native-walkthrough/issues",
+  "keywords": [
+    "walkthrough",
+    "copilot",
+    "tribefy",
+    "react",
+    "rn",
+    "react-native",
+    "javascript",
+    "tutorial"
+  ],
+  "peerDependencies": {
+    "react": ">= 16.x.x",
+    "react-native": ">=0.63.x",
+    "react-native-safe-area-context": ">= 3.x.x"
+  },
+  "dependencies": {
+    "lodash.sortby": "^4.7.0"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^15.0.0",
+    "@commitlint/config-conventional": "^15.0.0",
+    "@react-native-community/eslint-config": "^2.0.0",
+    "@types/react": "^16.9.53",
+    "@types/react-native": "^0.63.25",
+    "eslint": "^7.11.0",
+    "eslint-config-airbnb": "^18.2.0",
+    "husky": "^7.0.0",
+    "lint-staged": "^10.4.2",
+    "npm-post-install": "0.0.2",
+    "prettier": "^2.1.2",
+    "prettier-format": "^3.0.3",
+    "react-native-typescript-transformer": "^1.2.13",
+    "react-native-safe-area-context": "^3.3.2",
+    "typescript": "~4.3.5"
+  },
+  "scripts": {
+    "build": "cd lib && tsc && cp ../package.json ../build/dist/ && Echo Build completed!",
+    "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
+    "lint": "tslint -p tsconfig.json",
+    "version": "npm run format && git add -A src",
+    "postversion": "git push && git push --tags",
+    "prettier": "cd lib && npx prettier --write . && git add .",
+    "prepare": "husky install",
+    "husky:setup": "npx husky-init && npm run husky:commitlint && npm run husky:prettier",
+    "husky:commitlint": "npx husky add .husky/commit-msg 'npx --no-install commitlint --edit'",
+    "husky:prettier": "npx husky add .husky/pre-commit 'npm run prettier'"
+  }
+}
