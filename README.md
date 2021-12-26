@@ -66,7 +66,10 @@ import MyAwesomeApp from './src/MyAwesomeApp';
 
 export default function App() {
   return (
-    <WalkthroughProvider>
+    <WalkthroughProvider
+      // Pass in a hook that determines if the screen is focused or not. This is important if you have your walkthrough going from screen to screen.
+      // useIsFocused={useIsFocused}
+    >
       <MyAwesomeApp />
     </WalkthroughProvider>
   );
@@ -133,7 +136,7 @@ we'll add more in-depth documentation.
 
 ## Contributing
 
-This app is currently being used on tribefy.com. 
+This app is currently being used in the Tribefy app.
 
 We're looking for maintainers, so if you are interested please contact aryk@tribefy.com.
 
