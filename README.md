@@ -26,7 +26,7 @@ A cross-platform Walkthrough component for React Native that is performant, simp
 
 ## Demo
 
-https://user-images.githubusercontent.com/525212/147403105-b61c7b9f-0f87-442c-ba2c-361c6c71aab5.mp4
+https://user-images.githubusercontent.com/525212/147407154-d7374b9a-c370-4e75-a269-ecd225b4bbbc.mp4
 
 ## React Native Compatibility
 
@@ -66,7 +66,10 @@ import MyAwesomeApp from './src/MyAwesomeApp';
 
 export default function App() {
   return (
-    <WalkthroughProvider>
+    <WalkthroughProvider
+      // Pass in a hook that determines if the screen is focused or not. This is important if you have your walkthrough going from screen to screen.
+      // useIsFocused={useIsFocused}
+    >
       <MyAwesomeApp />
     </WalkthroughProvider>
   );
@@ -133,7 +136,7 @@ we'll add more in-depth documentation.
 
 ## Contributing
 
-This app is currently being used on tribefy.com. 
+This app is currently being used in the Tribefy app.
 
 We're looking for maintainers, so if you are interested please contact open-source@tribefy.com.
 
