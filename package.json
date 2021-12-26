@@ -5,13 +5,13 @@
   "main": "./lib/index.js",
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/tribefy/react-native-walkthrough.git"
+    "url": "git+ssh://git@github.com/tribefyhq/react-native-walkthrough.git"
   },
   "author": "Aryk Grosz <open-source@tribefy.com>",
   "license": "MIT",
-  "homepage": "https://github.com/tribefy/react-native-walkthrough#readme",
+  "homepage": "https://github.com/tribefyhq/react-native-walkthrough#readme",
   "bugs": {
-    "url": "https://github.com/tribefy/react-native-walkthrough/issues"
+    "url": "https://github.com/tribefyhq/react-native-walkthrough/issues"
   },
   "keywords": [
     "walkthrough",

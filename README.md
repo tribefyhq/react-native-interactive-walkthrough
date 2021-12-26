@@ -1,8 +1,7 @@
 # React Native Walkthrough
 
-[![Build Status][build-badge]][build]
-[![Version][version-badge]][package]
-[![MIT License][license-badge]][license]
+[![Version](https://img.shields.io/github/package-json/v/tribefyhq/react-native-walkthrough)][package]
+[![MIT Licence](https://img.shields.io/github/license/tribefyhq/react-native-walkthrough)][license]
 
 A cross-platform Walkthrough component for React Native. 
 
