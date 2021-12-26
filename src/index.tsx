@@ -591,17 +591,23 @@ const useWalkthroughStep = ({
 
   const isFocused = useIsFocused();
   const wasVisibleRef = useRef(false);
-  useEffect(() => {
-    if (currentStepNumber === number) {
-      if (isFocused) {
-        wasVisibleRef.current = true;
-        // If we had this step visible on a screen, but now for some reason not anymore (maybe they navigated for a notification)
-        // then we basically reset the tutorial and stop it so it doesn't stay on the screen as they navigate.
-      } else if (wasVisibleRef.current) {
-        stop();
+  useEffect(
+    () => {
+      if (currentStepNumber === number) {
+        if (isFocused) {
+          wasVisibleRef.current = true;
+          // If we had this step visible on a screen, but now for some reason not anymore (maybe they navigated for a notification)
+          // then we basically reset the tutorial and stop it so it doesn't stay on the screen as they navigate.
+        } else if (wasVisibleRef.current) {
+          stop();
+        }
+        // When the walkthrough is stopped, we need to reset this flag.
+      } else if (currentStepNumber === undefined) {
+        wasVisibleRef.current = false;
       }
-    }
-  }, [currentStepNumber, isFocused]);
+    },
+    [currentStepNumber, isFocused]
+  );
 
   // https://stackoverflow.com/a/64882955/7180620
   const registerStepWithProps = useCallback(
