@@ -1,5 +1,3 @@
-react-native-interactive-walkthrough / [Exports](modules.md)
-
 # React Native Interactive Walkthrough
 
 [![Version](https://img.shields.io/github/package-json/v/tribefyhq/react-native-interactive-walkthrough)][package]
@@ -164,8 +162,9 @@ const NearbyUsersOverlay = ({next, previous, step: {mask}}: IOverlayComponentPro
   />;
 ```
 
-The code is relatively short and readable. If you use TS, the interfaces are very straightforward. When we have more time,
-we'll add more in-depth documentation.
+The code is relatively short and readable. If you use TS, the interfaces are very straightforward.
+
+We've generated [docs](modules.md) from the TS interfaces to make it easy to go through the code.
 
 ## Contributing
 
