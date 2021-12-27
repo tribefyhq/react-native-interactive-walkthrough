@@ -1,3 +1,5 @@
+react-native-interactive-walkthrough / [Exports](modules.md)
+
 # React Native Interactive Walkthrough
 
 [![Version](https://img.shields.io/github/package-json/v/tribefyhq/react-native-interactive-walkthrough)][package]
@@ -38,7 +40,6 @@ https://user-images.githubusercontent.com/525212/147407154-d7374b9a-c370-4e75-a2
  9)  No dependencies besides react and react-native, lodash.sortBy, and react-native-safe-area-context
  10) When mask is not pressable through, you can specify an onPress event. You can also specify onPress background as well.
  11) Pass in a useIsFocused function so that the walkthrough automatically hides itself incase the user redirects away via push notifications or other code.
-
 
 ## React Native Compatibility
 
