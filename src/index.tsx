@@ -90,6 +90,11 @@ interface IWalkthroughContext extends IWalkthroughFunctions {
 }
 
 interface ILayoutAdjustments {
+  minX?: number;
+  minY?: number;
+  maxX?: number;
+  maxY?: number;
+
   addX?: number;
   addY?: number;
   addWidth?: number;
@@ -240,11 +245,12 @@ const WalkthroughDisplayer = () => {
 
       sortedCurrentSteps.forEach((step, i) => {
         const la = step.layoutAdjustments;
+
         const mask: IWalkthroughStepMask = la
           ? {
             ...step.mask,
-            x: (la.x ?? step.mask.x) + (la.addX ?? -(la.addPadding || 0)),
-            y: (la.y ?? step.mask.y) + (la.addY ?? -(la.addPadding || 0)),
+            x: Math.min(Math.max(la.minX || 0, (la.x ?? step.mask.x) + (la.addX ?? -(la.addPadding || 0))), Number.POSITIVE_INFINITY),
+            y: Math.min(Math.max(la.minY || 0, (la.y ?? step.mask.y) + (la.addY ?? -(la.addPadding || 0))), Number.POSITIVE_INFINITY),
             width:
               (la.width ?? step.mask.width) +
               (la.addWidth ?? (la.addPadding || 0) * 2),
