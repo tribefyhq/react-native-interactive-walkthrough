@@ -249,8 +249,8 @@ const WalkthroughDisplayer = () => {
         const mask: IWalkthroughStepMask = la
           ? {
             ...step.mask,
-            x: Math.min(Math.max(la.minX || 0, (la.x ?? step.mask.x) + (la.addX ?? -(la.addPadding || 0))), Number.POSITIVE_INFINITY),
-            y: Math.min(Math.max(la.minY || 0, (la.y ?? step.mask.y) + (la.addY ?? -(la.addPadding || 0))), Number.POSITIVE_INFINITY),
+            x: Math.min(Math.max(la.minX || -Number.POSITIVE_INFINITY, (la.x ?? step.mask.x) + (la.addX ?? -(la.addPadding || 0))), Number.POSITIVE_INFINITY),
+            y: Math.min(Math.max(la.minY || -Number.POSITIVE_INFINITY, (la.y ?? step.mask.y) + (la.addY ?? -(la.addPadding || 0))), Number.POSITIVE_INFINITY),
             width:
               (la.width ?? step.mask.width) +
               (la.addWidth ?? (la.addPadding || 0) * 2),
