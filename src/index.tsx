@@ -139,6 +139,7 @@ interface IWalkthroughStep {
   onPressMask?: OnPressWithContextType;
   onPressBackdrop?: OnPressWithContextType;
   mask: IWalkthroughStepMask;
+  computedMask: IWalkthroughStepMask;
   measureMask: () => any;
 }
 
@@ -244,21 +245,7 @@ const WalkthroughDisplayer = () => {
       let markerY = 0;
 
       sortedCurrentSteps.forEach((step, i) => {
-        const la = step.layoutAdjustments;
-
-        const mask: IWalkthroughStepMask = la
-          ? {
-            ...step.mask,
-            x: Math.min(Math.max(la.minX || -Number.POSITIVE_INFINITY, (la.x ?? step.mask.x) + (la.addX ?? -(la.addPadding || 0))), Number.POSITIVE_INFINITY),
-            y: Math.min(Math.max(la.minY || -Number.POSITIVE_INFINITY, (la.y ?? step.mask.y) + (la.addY ?? -(la.addPadding || 0))), Number.POSITIVE_INFINITY),
-            width:
-              (la.width ?? step.mask.width) +
-              (la.addWidth ?? (la.addPadding || 0) * 2),
-            height:
-              (la.height ?? step.mask.height) +
-              (la.addHeight ?? (la.addPadding || 0) * 2),
-          }
-          : step.mask;
+        const computedMask = step.computedMask;
 
         // Rectange on the top across the whole screen
         arr.push({
@@ -269,7 +256,7 @@ const WalkthroughDisplayer = () => {
             top: markerY,
             left: 0,
             right: 0,
-            height: mask.y - markerY,
+            height: computedMask.y - markerY,
             ...(debug ? { borderWidth: 1, borderColor: "red" } : {}),
           },
         });
@@ -279,10 +266,10 @@ const WalkthroughDisplayer = () => {
           onPress: step.onPressBackdrop,
           style: {
             backgroundColor: backdropColor,
-            top: mask.y,
+            top: computedMask.y,
             left: 0,
-            width: mask.x,
-            height: mask.height,
+            width: computedMask.x,
+            height: computedMask.height,
             ...(debug ? { borderWidth: 1, borderColor: "blue" } : {}),
           },
         });
@@ -292,10 +279,10 @@ const WalkthroughDisplayer = () => {
           onPress: step.onPressBackdrop,
           style: {
             backgroundColor: backdropColor,
-            top: mask.y,
-            left: mask.x + mask.width,
+            top: computedMask.y,
+            left: computedMask.x + computedMask.width,
             right: 0,
-            height: mask.height,
+            height: computedMask.height,
             ...(debug ? { borderWidth: 1, borderColor: "green" } : {}),
           },
         });
@@ -305,7 +292,7 @@ const WalkthroughDisplayer = () => {
             ? sortedCurrentSteps[i + 1]
             : undefined;
         if (!nextStep) {
-          const top = mask.y + mask.height;
+          const top = computedMask.y + computedMask.height;
           arr.push({
             // We only have one of these (at the end) so want to give this the same key so it can be reused in the animation.
             key: `bottomRect`,
@@ -322,15 +309,15 @@ const WalkthroughDisplayer = () => {
         }
 
         // If we aren't allowing interaction on the highlighted region, then just put a view over that as well so its not pressable.
-        if (!mask.allowInteraction) {
+        if (!computedMask.allowInteraction) {
           arr.push({
             key: `coverRect-${i}`,
             onPress: step.onPressMask,
             style: {
-              top: mask.y,
-              left: mask.x,
-              width: mask.width,
-              height: mask.height,
+              top: computedMask.y,
+              left: computedMask.x,
+              width: computedMask.width,
+              height: computedMask.height,
               // on Android (not sure if all), if we have an empty View without a background, it will not take the
               // touchevents. Rather then experimenting with wrapping it with TouchableWithoutFeedback, etc, we simply
               // give it an *extremely* subtle background that's essentially not noticeable. This helps it steal the touch events.
@@ -348,7 +335,7 @@ const WalkthroughDisplayer = () => {
             },
           });
         }
-        markerY = mask.y + mask.height;
+        markerY = computedMask.y + computedMask.height;
       });
       return arr;
     },
@@ -619,13 +606,37 @@ const useWalkthroughStep = ({
     (maskProps: IWalkthroughStepMask) => {
       const { maskAllowInteraction, ...stepProps } = propsRef.current;
       logStep(stepProps.number, `Setting mask: ${JSON.stringify(maskProps)}`);
-      registerStep({
+
+      const mask: IWalkthroughStepMask = {
+        allowInteraction: maskAllowInteraction,
+        ...maskProps,
+      };
+
+      let step: IWalkthroughStep = {
         ...stepProps,
-        mask: {
-          allowInteraction: maskAllowInteraction,
-          ...maskProps,
-        },
-      });
+        mask,
+        computedMask: mask, // default, overwrite in next block maybe...
+      };
+
+      if (step.layoutAdjustments) {
+        const la = step.layoutAdjustments;
+        step = {
+          ...step,
+          computedMask: {
+            allowInteraction: mask.allowInteraction,
+            x: Math.min(Math.max(la.minX || -Number.POSITIVE_INFINITY, (la.x ?? step.mask.x) + (la.addX ?? -(la.addPadding || 0))), Number.POSITIVE_INFINITY),
+            y: Math.min(Math.max(la.minY || -Number.POSITIVE_INFINITY, (la.y ?? step.mask.y) + (la.addY ?? -(la.addPadding || 0))), Number.POSITIVE_INFINITY),
+            width:
+              (la.width ?? step.mask.width) +
+              (la.addWidth ?? (la.addPadding || 0) * 2),
+            height:
+              (la.height ?? step.mask.height) +
+              (la.addHeight ?? (la.addPadding || 0) * 2),
+          },
+        }
+      }
+
+      registerStep(step);
     },
     [registerStep],
   );
