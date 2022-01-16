@@ -139,7 +139,7 @@ interface IWalkthroughStep {
   onPressMask?: OnPressWithContextType;
   onPressBackdrop?: OnPressWithContextType;
   mask: IWalkthroughStepMask;
-  computedMask: IWalkthroughStepMask;
+  computedMask?: IWalkthroughStepMask;
   measureMask: () => any;
 }
 
