@@ -125,6 +125,8 @@ interface IWalkthroughStep {
   number: number;
   identifier: string;
   overlayComponentKey: string;
+  // Pass through props to pass into the component. Make sure the props object does not remove keys or change order,
+  // as it will cause an error when checking for a chance in values amongst the object values.
   overlayComponentProps?: any;
   OverlayComponent?: React.ComponentType<IOverlayComponentProps>;
   fullScreen?: boolean;
@@ -580,6 +582,20 @@ const useWalkthroughStep = ({
     () => allSteps.find((s) => s.identifier === identifier),
     [identifier, allSteps],
   );
+
+  // We want the step to be registered if the props change so that the render item reflects the new overlayComponentProps
+  useEffect(
+    () => {
+      if (step && props.overlayComponentProps) {
+        registerStep({
+          ...step,
+          overlayComponentProps: props.overlayComponentProps,
+        })
+      }
+    },
+    // Do not include step or any other dependency, will cause an infinite loop
+    Object.values(props.overlayComponentProps || {}),
+  )
 
   const isFocused = useIsFocused();
   const wasVisibleRef = useRef(false);
